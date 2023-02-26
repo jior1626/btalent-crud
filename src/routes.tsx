@@ -1,4 +1,4 @@
-export const AUTH = "/auth";
+export const AUTH = "/";
 export const HOME = "/home";
 export const USERS = "/users";
 export const POST = "/posts";
