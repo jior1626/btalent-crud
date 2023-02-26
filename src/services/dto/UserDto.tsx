@@ -11,6 +11,12 @@ interface Geo {
     lng: string,
 }
 
+interface Company {
+    name: string,
+    catchPhrase: string,
+    bs: string,
+}
+
 export interface UserDto {
     id: number,
     name: string,
@@ -19,9 +25,5 @@ export interface UserDto {
     address: Address,
     phone: string,
     website: string,
-    company: {
-        name: string,
-        catchPhrase: string,
-        bs: string,
-    }
+    company: Company
 }

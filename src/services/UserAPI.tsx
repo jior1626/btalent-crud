@@ -1,4 +1,5 @@
 import axios from "axios";
+import { UserDto } from "./dto/UserDto";
 
 export const getUsers = async () => {
     const result = await axios.get('https://jsonplaceholder.typicode.com/users')
@@ -18,7 +19,7 @@ export const deleteUser = async (userId: number) => {
     return result;
 }
 
-export const updateUser = async (userId: number, user: any) => {
+export const updateUser = async (userId: number, user: UserDto) => {
     const result = await axios.put('https://jsonplaceholder.typicode.com/users/'+userId, user)
     .then(response => response)
     return result;
