@@ -14,20 +14,13 @@ const ListUsers: React.FC<ListUserInterface> = ({showEditUser}) => {
 
     const dispatch = useAppDispatch();
 
-    // const [usersList, setUsersList] = useState<UserDto[]>([]);
-
     const { users } = useAppSelector(usersSelector);
 
     const loadUsers = async () => {
         dispatch(setLoading(true));
-        if(users.length > 0) {
-            // setUsersList(users);
-            console.log("in stage", users);
-        } else {
+        if(users.length == 0) {
             const response = await UsersService.getUsers();
             dispatch(setUsersInStage(response))
-            // setUsersList(users);
-            console.log("consume services", response);
         }
         dispatch(setLoading(false))
     }
