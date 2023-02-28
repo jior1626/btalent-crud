@@ -45,6 +45,7 @@ const UsersView = () => {
         setMessageAlert(message)
         setTypeAlert(type)
         setShowCreate(false);
+        setTypeForm("")
     }
 
     return (
