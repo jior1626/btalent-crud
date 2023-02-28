@@ -11,6 +11,7 @@ import { UserDto } from "../../../services/dto/UserDto";
 import { usersSelector } from "./UsersSlice";
 import { useAppSelector } from "../../../app/hooks";
 import Loading from "../../../shared/molecules/Spinner/Spinner";
+import AlertBoostrap from "../../../shared/molecules/Alert/Alert";
 
 const UsersView = () => {
 
@@ -21,6 +22,12 @@ const UsersView = () => {
     const [userSelected, setUserSelected] = useState<UserDto>({})
 
     const { users, isLoading, error } = useAppSelector(usersSelector);
+
+    const [showAlert, setShowAlert] = useState(false);
+
+    const [messageAlert, setMessageAlert] = useState("");
+
+    const [typeAlert, setTypeAlert] = useState("");
 
     const showCreateUser = () => {
         setShowCreate(true);
@@ -33,11 +40,20 @@ const UsersView = () => {
         setTypeForm("update")
     }
 
+    const showAlertByMessage = (type: string, message: string) => {
+        setShowAlert(true)
+        setMessageAlert(message)
+        setTypeAlert(type)
+        setShowCreate(false);
+    }
+
     return (
         <>
             { isLoading ? <Loading /> : <></> }
             <Layout>
-                
+                <div className="contain-alert">
+                    { showAlert ? <AlertBoostrap setShowAlert={setShowAlert} type={typeAlert} message={messageAlert} />: <></> }
+                </div>
                 {
                     showCreate ?
                         <>
@@ -47,7 +63,7 @@ const UsersView = () => {
                                     <span className="bi bi-arrow-bar-left"></span>
                                 </Button>
                             </div>
-                            <FormUser user={userSelected} type={typeForm}/>
+                            <FormUser user={userSelected} type={typeForm} showAlertByMessage={showAlertByMessage}/>
                         </>
                     :  
                     <>
@@ -57,7 +73,7 @@ const UsersView = () => {
                                 <span className="bi bi-person-plus-fill"></span>
                             </Button>
                         </div>
-                        <ListUsers showEditUser={showEditUser}/>
+                        <ListUsers showEditUser={showEditUser} showAlertByMessage={showAlertByMessage}/>
                     </>
                 }
             </Layout>

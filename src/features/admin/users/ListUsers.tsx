@@ -7,10 +7,11 @@ import { setLoading, setUsersInStage, usersSelector, deleteUserSuccess } from ".
 import UsersService from "./../../../services/UserAPI";
 
 interface ListUserInterface {
-    showEditUser: Function
+    showEditUser: Function,
+    showAlertByMessage: Function
 }
 
-const ListUsers: React.FC<ListUserInterface> = ({showEditUser}) => {
+const ListUsers: React.FC<ListUserInterface> = ({showEditUser, showAlertByMessage}) => {
 
     const dispatch = useAppDispatch();
 
@@ -34,6 +35,7 @@ const ListUsers: React.FC<ListUserInterface> = ({showEditUser}) => {
             dispatch(setLoading(true));
             await UsersService.deleteUser(id);
             dispatch(deleteUserSuccess(id))
+            showAlertByMessage("info", "Usuario borrado correctamente!!!");
         }
     }
 

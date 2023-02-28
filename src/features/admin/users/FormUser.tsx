@@ -8,9 +8,10 @@ import { setLoading, saveUserSuccess, editUserSuccess } from "../../../views/adm
 interface FormUserInterface {
     user: UserDto,
     type: string,
+    showAlertByMessage: Function
 }
 
-const FormUser: React.FC<FormUserInterface> = ({user, type}) => {
+const FormUser: React.FC<FormUserInterface> = ({user, type, showAlertByMessage}) => {
 
     const dispatch = useAppDispatch();
 
@@ -52,6 +53,7 @@ const FormUser: React.FC<FormUserInterface> = ({user, type}) => {
             dispatch(editUserSuccess(result));
         }
         dispatch(setLoading(false));
+        showAlertByMessage("success", "Usuario guardado correctamente!!!")
     }   
 
     return (
