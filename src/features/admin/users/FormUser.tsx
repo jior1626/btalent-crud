@@ -1,4 +1,4 @@
-import {useRef, useLayoutEffect, useState} from "react";
+import {useRef, useEffect, useState} from "react";
 import { Table, Button, Form} from "react-bootstrap";
 import { useAppDispatch } from "../../../app/hooks";
 import { UserDto } from "../../../services/dto/UserDto";
@@ -15,19 +15,17 @@ const FormUser: React.FC<FormUserInterface> = ({user, type, showAlertByMessage})
 
     const dispatch = useAppDispatch();
 
-    let formUser = useRef<HTMLFormElement>(null)
+    const [id, setId] = useState(user.id ? user.id : 0);
 
-    const [id, setId] = useState(user.id || 0);
+    const [name, setName] = useState(user.name ? user.name : "");
 
-    const [name, setName] = useState(user.name || "");
+    const [username, setUsername] = useState(user.username ? user.username : "");
 
-    const [username, setUsername] = useState(user.username || "");
+    const [company, setCompany] = useState(user.company?.name ? user.company.name : "");
 
-    const [company, setCompany] = useState(user.company?.name || "");
+    const [phone, setPhone] = useState(user.phone ? user.phone : "");
 
-    const [phone, setPhone] = useState(user.phone || "");
-
-    const [email, setEmail] = useState(user.email || "");
+    const [email, setEmail] = useState(user.email ? user.email : "");
 
     const [password, setPassword] = useState("");
 
@@ -37,7 +35,6 @@ const FormUser: React.FC<FormUserInterface> = ({user, type, showAlertByMessage})
         dispatch(setLoading(true));
 
         let data: UserDto = {};
-        data.id = id;
         data.name = name;
         data.username = username;
         data.company = {}
@@ -49,16 +46,17 @@ const FormUser: React.FC<FormUserInterface> = ({user, type, showAlertByMessage})
             const result = await UsersService.saveUser(data);
             dispatch(saveUserSuccess(result));
         } else {
+            data.id = id;
             const result = await UsersService.updateUser(id, data);
             dispatch(editUserSuccess(result));
         }
         dispatch(setLoading(false));
         showAlertByMessage("success", "Usuario guardado correctamente!!!")
-    }   
+    }  
 
     return (
         <>
-            <Form id="form-user" className="p-3" onSubmit={saveUser} ref={formUser}>
+            <Form id="form-user" className="p-3" onSubmit={saveUser}>
                 <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label>Nombre Completo <strong className="text-danger">*</strong></Form.Label>
                     <Form.Control type="text" placeholder="Digite el nombre completo..." onChange={(e) => setName(e.target.value)} value={name} />

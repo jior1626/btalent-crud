@@ -31,6 +31,7 @@ const UsersView = () => {
 
     const showCreateUser = () => {
         setShowCreate(true);
+        setUserSelected({});
         setTypeForm("save")
     }
 
