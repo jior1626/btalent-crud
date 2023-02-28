@@ -1,18 +1,26 @@
 
 import './App.css';
-import {  BrowserRouter as Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider  } from 'react-router-dom';
 
-import { AUTH, USERS } from './routes';
 
-import Auth from './features/auth/Auth';
-import Users from './features/admin/users/Users';
+import Auth from './views/auth/Auth';
+import Home from './views/admin/home/Home';
+import Users from './views/admin/users/Users';
+import Middleware from './Middleware';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<Auth />} />
+      <Route path="/home" element={<Middleware Element={<Home />} path="/home"/>} />
+      <Route path="/users" element={<Middleware Element={<Users />} path="/users"/>} />
+    </Route>
+  )
+);
 
 function App() {
   return (
-    <Routes>
-      <Route path={AUTH} element={<Auth />} />
-      <Route path={USERS} element={<Users />} />
-    </Routes>
+    <RouterProvider router={router} />
   )
 }
 

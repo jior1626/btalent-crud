@@ -1,17 +1,20 @@
 
 
 import Logo from "./../../../assets/images/logo.png";
-import React, {useState} from "react";
+import {useState} from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/esm/Button";
 
-import AuthService from "./../../../services/AuthAPI";
-
-import "./Login.css"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { setAuthFailed, setAuthSuccess, setLoading, authSelector } from "../authSlice";
+
+import AuthService from "./../../../services/AuthAPI";
+
 import Loading from "../../../shared/molecules/Spinner/Spinner";
 import AlertBoostrap from "../../../shared/molecules/Alert/Alert";
+
+import "./Login.css"
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -29,6 +32,8 @@ const Login = () => {
 
     const dispatch = useAppDispatch();
 
+    let navigate = useNavigate();
+
     const authLogin = async (e: any) => {
         e.preventDefault();
         dispatch(setLoading(true));
@@ -37,7 +42,7 @@ const Login = () => {
             const user = await AuthService.loginUser(email, password);
             if(user.length > 0) {
                 dispatch(setAuthSuccess(user[0]));
-    
+                navigate(`/home`)
             } else {
                 dispatch(setAuthFailed("Usuario no registrado. Por favor registrese!!!"));
                 setTypeAlert("danger");
@@ -49,7 +54,6 @@ const Login = () => {
             setMessageAlert("Correo o contraseña vacios!")
             setShowAlert(true);
         }
-       
     }
 
     return (
@@ -68,9 +72,6 @@ const Login = () => {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Correo <strong className="text-danger">*</strong></Form.Label>
                                 <Form.Control type="email" required placeholder="Ingrese el correo" onChange={e => setEmail(e.target.value)} />
-                                {/* <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                </Form.Text> */}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">

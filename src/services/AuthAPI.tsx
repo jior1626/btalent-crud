@@ -1,13 +1,14 @@
 import axios from "axios";
 
+class AuthService {
 
-export const loginUser = async (email = "", pass ="") => {
-    const result = await axios.get('https://jsonplaceholder.typicode.com/users?'+email).then((data: any) => data[0])
-    return result;
+    async loginUser (email: string, pass: string) {
+        return await axios.get('https://jsonplaceholder.typicode.com/users?email='+email).then(data => data.data);
+    }
+    
+    async registerUser (user: any) {
+        return await axios.post('https://jsonplaceholder.typicode.com/users', user).then(data => data.data);
+    }
 }
 
-export const registerUser = async (user: any) => {
-    const result = await axios.post('https://jsonplaceholder.typicode.com/users', user)
-    .then(response => response)
-    return result;
-}
+export default new AuthService();

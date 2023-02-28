@@ -1,0 +1,17 @@
+.loading {
+    display: flex !important;
+    justify-content: center !important;
+    opacity: 0.6;
+    align-items: center;
+    padding: 1rem;
+    position:fixed;
+    z-index: 9999;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.size-loading {
+    width: 20rem !important;
+    height: 20rem !important;
+}
